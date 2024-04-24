@@ -5,9 +5,11 @@ import { MdArrowDropDown } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { BsMinecart } from "react-icons/bs";
 import { motion } from "framer-motion";
+import { allItems } from "../utils/data";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
+  const [search, setSearch] = useState(false);
 
   // --------------------overlay drawer----------------------
   const ref = useRef();
@@ -15,11 +17,11 @@ const Navbar = () => {
     document.body.addEventListener("click", (e) => {
       if (e.target.contains(ref.current)) {
         setNav(false);
+        setSearch(false);
       }
     });
   }, []);
   // --------------------overlay drawer----------------------
-  const [search, setSearch] = useState(false);
 
   return (
     <div className="w-full bg-[#131921] text-white px-8 py-2  flex items-center gap-1">
@@ -106,9 +108,17 @@ const Navbar = () => {
           </span>
         </span>
         {search && (
-          <div>
-            <ul className="absolute top-11 left-0 w-56 h-80 border-[#131921] bg-gray-500  rounded-lg">
-              <li>hello</li>
+          <div
+           
+          >
+            <ul className="absolute px-1 top-11 left-0 w-56 h-72 border-[1px] border-[#131921] bg-gray-100 text-black  rounded-lg overflow-x-hidden overflow-y-scroll flex flex-col z-50 ">
+              {allItems.map((item) => (
+                <div key={item.id} className="m-1">
+                  <li className="text-md mb-1 cursor-pointer  hover:bg-blue-400">
+                    {item.title}
+                  </li>
+                </div>
+              ))}
             </ul>
           </div>
         )}
