@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { india, logo } from "../assets";
 import { CiLocationOn } from "react-icons/ci";
 import { MdArrowDropDown } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { BsMinecart } from "react-icons/bs";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
-  const [show, setShow] = useState(false);
-  console.log(show);
+  const [nav, setNav] = useState(false);
+
+  // --------------------overlay drawer----------------------
+  const ref = useRef();
+  useEffect(() => {
+    document.body.addEventListener("click", (e) => {
+      if (e.target.contains(ref.current)) {
+        setNav(false);
+      }
+    });
+  }, []);
+  // --------------------overlay drawer----------------------
+  const [search, setSearch] = useState(false);
+
   return (
     <div className="w-full bg-[#131921] text-white px-8 py-2  flex items-center gap-1">
       {/* -------------------logo------------------------- */}
@@ -16,9 +29,61 @@ const Navbar = () => {
       </div>
       {/* -------------------logo------------------------- */}
 
-      {/* ----------delivery------------------------------ */}
-      <div className="headerHover p-1 ">
-        {/* overlay */}
+      {/* overlay */}
+      {nav ? (
+        <div
+          className="bg-black/45 fixed w-full  h-screen z-10 top-0 left-0 text-black "
+          ref={ref}
+        >
+          <motion.div
+            initial={{ x: 10, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            className="absolute w-[400px] h-[250px] bg-white top-[12rem] left-[35rem] rounded-2xl rounded-tr-2xl duration-300 "
+          >
+            <div className="flex flex-col gap-1 ">
+              <p className=" py-3 bg-[#F0F2F2]  px-5 text-xl font-bold border border-b-gray-300">
+                Choose Your Location
+              </p>
+              <div className="text-sm py-2 px-6 text-gray-600 flex flex-col">
+                <span>
+                  Select a delivery location to see product availability and
+                  delivery options
+                </span>
+
+                <button className="py-2 bg-[#FFD814] text-black/70 rounded-lg my-2 hover:bg-yellow-500">
+                  {" "}
+                  sign in to see your address
+                </button>
+
+                <div className="w-full text-sm text-gray my-1 flex items-center">
+                  <span className="w-1/4 h-[1px] bg-gray-500 inline-flex"></span>
+                  <span className="w-1/2 text-center">
+                    {" "}
+                    or enter an indian pincode
+                  </span>
+                  <span className="w-1/4 h-[1px] bg-gray-500 inline-flex"></span>
+                </div>
+
+                <div className="my-4 w-full flex gap-2 ">
+                  <input
+                    type="text"
+                    className=" px-4 border border-gray-400 w-[15rem] rounded-md "
+                  />
+                  <button className="px-10 py-2  text-black border  border-gray-400 rounded-md">
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      ) : (
+        ""
+      )}
+      {/* overlay */}
+
+      {/* ----------Location------------------------------ */}
+      <div className="headerHover p-1 " onClick={() => setNav(true)}>
         <div>
           <CiLocationOn size={20} className=" text-white " />
         </div>
@@ -27,12 +92,12 @@ const Navbar = () => {
           <p className="font-semibold -mt-[5px]">Update Location</p>
         </div>
       </div>
-      {/* ----------delivery------------------------------ */}
+      {/* ----------Location------------------------------ */}
 
       {/* -------------------search-bar----------------------- */}
       <div className="h-10 flex flex-grow rounded-md relative">
         <span
-          onClick={() => setShow(!show)}
+          onClick={() => setSearch(!search)}
           className="w-14 h-full flex items-center justify-center bg-gray-200 text-sm px-1 rounded-l-md text-gray-500 hover:text-gray-700"
         >
           All
@@ -40,7 +105,7 @@ const Navbar = () => {
             <MdArrowDropDown size={20} />
           </span>
         </span>
-        {show && (
+        {search && (
           <div>
             <ul className="absolute top-11 left-0 w-56 h-80 border-[#131921] bg-gray-500  rounded-lg">
               <li>hello</li>
