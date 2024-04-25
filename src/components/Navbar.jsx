@@ -10,6 +10,7 @@ import { allItems } from "../utils/data";
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [search, setSearch] = useState(false);
+  const [ lang , setLang] = useState(false)
 
   // --------------------overlay drawer----------------------
   const ref = useRef();
@@ -22,6 +23,16 @@ const Navbar = () => {
     });
   }, []);
   // --------------------overlay drawer----------------------
+  // --------------------search popup----------------------
+  const seachref = useRef();
+  useEffect(() => {
+    document.body.addEventListener("click", (e) => {
+      if (e.target.contains(seachref.current)) {
+        setSearch(false);
+      }
+    });
+  }, []);
+  // --------------------search popup----------------------
 
   return (
     <div className="w-full bg-[#131921] text-white px-8 py-2  flex items-center gap-1">
@@ -108,13 +119,11 @@ const Navbar = () => {
           </span>
         </span>
         {search && (
-          <div
-           
-          >
-            <ul className="absolute px-1 top-11 left-0 w-56 h-72 border-[1px] border-[#131921] bg-gray-100 text-black  rounded-lg overflow-x-hidden overflow-y-scroll flex flex-col z-50 ">
+          <div className="w-full h-screen fixed top-[3.9rem] left-25 z-20" ref={seachref}>
+            <ul  className="absolute px-1  w-56 h-72 border-[1px] border-[#131921] bg-white text-black  rounded-lg overflow-x-hidden overflow-y-scroll flex flex-col z-50 ">
               {allItems.map((item) => (
-                <div key={item.id} className="m-1">
-                  <li className="text-md mb-1 cursor-pointer  hover:bg-blue-400">
+                <div key={item.id} className="m-1" >
+                  <li className="text-md mb-1 cursor-pointer   hover:bg-blue-400" >
                     {item.title}
                   </li>
                 </div>
@@ -134,7 +143,14 @@ const Navbar = () => {
       {/* -------------------search-bar----------------------- */}
 
       {/* --------------------language------------------------- */}
-      <div className="flex headerHover">
+      {
+      lang ? <div className= " absolute w-56 h-56 bg-white top-[4.7rem] right-[15rem] border border-black">
+
+      </div> : ""
+      
+      }
+
+      <div className="flex headerHover" onMouseOver={()=>setLang(!lang)}>
         <img src={india} alt="" className="w-6 px-1" />
         <span>EN</span>
         <span className="mt-4 text-gray-200">
