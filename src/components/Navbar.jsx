@@ -10,7 +10,6 @@ import { allItems } from "../utils/data";
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [search, setSearch] = useState(false);
-  const [ lang , setLang] = useState(false)
 
   // --------------------overlay drawer----------------------
   const ref = useRef();
@@ -119,11 +118,17 @@ const Navbar = () => {
           </span>
         </span>
         {search && (
-          <div className="w-full h-screen fixed top-[3.9rem] left-25 z-20" ref={seachref}>
-            <ul  className="absolute px-1  w-56 h-72 border-[1px] border-[#131921] bg-white text-black  rounded-lg overflow-x-hidden overflow-y-scroll flex flex-col z-50 ">
+          <div
+            className="w-full h-screen fixed top-[3.9rem] left-25 z-50"
+            ref={seachref}
+          >
+            <ul className="absolute px-1  w-56 h-72 border-[1px] border-[#131921] bg-white text-black  rounded-lg overflow-x-hidden overflow-y-scroll flex flex-col  ">
               {allItems.map((item) => (
-                <div key={item.id} className="m-1" >
-                  <li className="text-md mb-1 cursor-pointer   hover:bg-blue-400" >
+                <div key={item.id} className="m-1">
+                  <li
+                    className="text-md mb-1 cursor-pointer   hover:bg-blue-400"
+                    ref={seachref}
+                  >
                     {item.title}
                   </li>
                 </div>
@@ -133,7 +138,7 @@ const Navbar = () => {
         )}
         <input
           type="text"
-          placeholder="Amazone Search Here.."
+          placeholder=" Search Amazone.in"
           className="h-full text-black flex-grow outline-none border-none px-2"
         />
         <span className="w-12 h-full flex items-center justify-center bg-[#FEBD69] hover:bg-[#f32847] duration-300 cursor-pointer rounded-r-md">
@@ -143,18 +148,21 @@ const Navbar = () => {
       {/* -------------------search-bar----------------------- */}
 
       {/* --------------------language------------------------- */}
-      {
-      lang ? <div className= " absolute w-56 h-56 bg-white top-[4.7rem] right-[15rem] border border-black">
 
-      </div> : ""
-      
-      }
-
-      <div className="flex headerHover" onMouseOver={()=>setLang(!lang)}>
-        <img src={india} alt="" className="w-6 px-1" />
-        <span>EN</span>
-        <span className="mt-4 text-gray-200">
-          <MdArrowDropDown />
+      <div className="flex headerHover" >
+        <img src={india} alt="" className="w-8 px-1" />
+        <span>
+          <select name="" id="" className="text-black px-1 py-1">
+            <option className="outline-none" value="">
+              English
+            </option>
+            <option className="outline-none" value="">
+              Marathi
+            </option>
+            <option className="outline-none" value="">
+              Hindi
+            </option>
+          </select>
         </span>
       </div>
       {/* --------------------language------------------------- */}

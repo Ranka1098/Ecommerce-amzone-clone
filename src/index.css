@@ -6,6 +6,8 @@
     .headerHover {
         @apply px-2 py-1 h-[80%] flex items-center border border-transparent hover:border-white cursor-pointer duration-200
     }
-
+.borderHover{
+    @apply p-2 border border-transparent hover:border-white;
+}
 
 }
