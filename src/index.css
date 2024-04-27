@@ -6,8 +6,24 @@
     .headerHover {
         @apply px-2 py-1 h-[80%] flex items-center border border-transparent hover:border-white cursor-pointer duration-200
     }
-.borderHover{
-    @apply p-2 border border-transparent hover:border-white;
-}
 
+    .borderHover {
+        @apply p-2 border border-transparent hover:border-white;
+    }
+
+    .footerHead {
+        @apply text-white text-lg font-bold cursor-pointer;
+    }
+
+    .footerLink {
+
+        @apply text-sm py-1 text-white cursor-pointer hover:underline;
+
+    }
+    .footerBottomTitle{
+    @apply w-24 font-semibold text-[12px] hover:underline leading-3 mb-[3px]
+    }
+    .footerBottomText{
+    @apply w-24 tracking-tight text-[12px] text-[#999] group-hover:underline leading-3
+    }
 }

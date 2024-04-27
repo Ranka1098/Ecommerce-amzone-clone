@@ -33,6 +33,10 @@
 # task 1
 - amazone favicon logo add in index.html
 
-# tast 2
--navabar
-create component folder
+# task 2
+- create component folder
+- navabar component created
+- navbar bottom component ceated
+
+# task 3
+- footer component created
