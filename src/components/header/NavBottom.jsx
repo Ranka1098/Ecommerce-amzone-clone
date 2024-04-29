@@ -43,13 +43,11 @@ const NavBottom = () => {
       {/* --close button sidebar--- */}
 
       {sidebar && (
-        <div className="w-[25rem] h-full bg-white absolute top-0 left-0 text-black z-20 overflow-y-scroll">
+        <div className="w-[25rem] h-[100%] bg-white absolute top-0 left-0 text-black z-20 overflow-y-scroll">
           <p className="bg-[#232F3E] text-xl text-white px-6 py-4 flex items-center gap-2">
-            {" "}
             <span>
-              {" "}
-              <FaCircleUser size={30} />{" "}
-            </span>{" "}
+              <FaCircleUser size={30} />
+            </span>
             Hello, Sign In
           </p>
           <div className="p-4 border-b border-b-black ">
