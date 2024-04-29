@@ -46,4 +46,4 @@
 - add carosel slidebar component
 
 # task 5 
-- Routing reactRouting-6.0
+- Routing reactRouting-6.4 

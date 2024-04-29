@@ -12,7 +12,6 @@ const SimpleSlibeBar = () => {
         className={className}
         style={{
           ...style,
-          display: "block",
           background: "transparent",
           position: "absolute",
           top: "50%",
@@ -35,7 +34,6 @@ const SimpleSlibeBar = () => {
         className={className}
         style={{
           ...style,
-          display: "block",
           background: "transparent",
           position: "absolute",
           top: "50%",

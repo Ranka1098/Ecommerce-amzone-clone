@@ -1,17 +1,30 @@
 import React from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import SimpleSlideBar from "./components/SimpleSlideBar";
+import { Outlet, createBrowserRouter } from "react-router-dom";
+import Home from "./pages/Home";
 
-const App = () => {
+const AppLayout = () => {
   return (
     <div>
-    <Header />
-    <SimpleSlideBar />
-   
+      <Header />
+      <Home />
       <Footer />
     </div>
   );
 };
 
-export default App;
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
+  },
+]);
+
+export default appRouter;
