@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { india, logo } from "../assets";
+import { india, logo } from "../../assets";
 import { CiLocationOn } from "react-icons/ci";
 import { MdArrowDropDown } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { BsMinecart } from "react-icons/bs";
 import { motion } from "framer-motion";
-import { allItems } from "../utils/data";
+import { allItems } from "../../utils/data";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -149,7 +149,7 @@ const Navbar = () => {
 
       {/* --------------------language------------------------- */}
 
-      <div className="flex headerHover" >
+      <div className="flex headerHover">
         <img src={india} alt="" className="w-8 px-1" />
         <span>
           <select name="" id="" className="text-black px-1 py-1">

@@ -40,3 +40,10 @@
 
 # task 3
 - footer component created
+- footer section completed sucessfully
+
+# task 4 
+- add carosel slidebar component
+
+# task 5 
+- Routing reactRouting-6.0

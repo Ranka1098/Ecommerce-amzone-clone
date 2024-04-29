@@ -1,5 +1,5 @@
 import React from "react";
-import { logo ,india} from "../assets/index"
+import { logo ,india} from "../../assets/index"
 import { BsGlobe } from "react-icons/bs";
 
 const FooterLanguageButton = () => {

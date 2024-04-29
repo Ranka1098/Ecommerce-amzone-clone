@@ -3,8 +3,8 @@ import React from "react";
 import FooterBottom from "./footer/FooterBottom";
 import FooterTopButton from "./footer/FooterTopButton";
 import FooterBackToTopButton from "./footer/FooterBackToTopButton";
-import FooterLanguageButton from "./FooterLanguageButton";
 import CopyRightPage from "./footer/CopyRightPage";
+import FooterLanguageButton from "./footer/FooterLanguageButton";
 const Footer = () => {
   return (
     <div>
@@ -50,7 +50,6 @@ const Footer = () => {
           <p className="footerLink">Help</p>
         </div>
       </div>
-
       <FooterLanguageButton />
       <FooterBottom />
       <CopyRightPage />

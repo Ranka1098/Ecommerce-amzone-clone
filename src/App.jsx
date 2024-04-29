@@ -1,16 +1,17 @@
-import React from 'react'
-import Navbar from './components/Navbar'
-import NavBottom from './components/NavBottom'
-import Footer from './components/Footer'
+import React from "react";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import SimpleSlideBar from "./components/SimpleSlideBar";
 
 const App = () => {
   return (
     <div>
-      <Navbar />
-      <NavBottom />
+    <Header />
+    <SimpleSlideBar />
+   
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
