@@ -20,10 +20,15 @@
         @apply text-sm py-1 text-white cursor-pointer hover:underline;
 
     }
-    .footerBottomTitle{
-    @apply w-24 font-semibold text-[12px] hover:underline leading-3 mb-[3px]
+
+    .footerBottomTitle {
+        @apply w-24 font-semibold text-[12px] hover:underline leading-3 mb-[3px]
     }
-    .footerBottomText{
-    @apply w-24 tracking-tight text-[12px] text-[#999] group-hover:underline leading-3
+
+    .footerBottomText {
+        @apply w-24 tracking-tight text-[12px] text-[#999] group-hover:underline leading-3
+    }
+    .loginLinks{
+    @apply hover:text-amber-800 hover:underline duration-300
     }
 }

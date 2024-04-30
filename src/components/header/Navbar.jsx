@@ -6,11 +6,14 @@ import { IoSearch } from "react-icons/io5";
 import { BsMinecart } from "react-icons/bs";
 import { motion } from "framer-motion";
 import { allItems } from "../../utils/data";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [search, setSearch] = useState(false);
 
+  const item = useSelector(store => store.cart.cart)
   // --------------------overlay drawer----------------------
   const ref = useRef();
   useEffect(() => {
@@ -168,17 +171,19 @@ const Navbar = () => {
       {/* --------------------language------------------------- */}
 
       {/* -----------SignIn page--------------------------------- */}
-      <div className="flex flex-col headerHover">
-        <span className=" text-sm -mb-2"> Hello, Sign In</span>
-        <span className="font-bold flex text-sm">
-          {" "}
-          Account & Lists{" "}
-          <span className="mt-2 text-gray-100">
+      <Link to="/login">
+        <div className="flex flex-col headerHover">
+          <span className=" text-sm -mb-2"> Hello, Sign In</span>
+          <span className="font-bold flex text-sm">
             {" "}
-            <MdArrowDropDown />
+            Account & Lists{" "}
+            <span className="mt-2 text-gray-100">
+              {" "}
+              <MdArrowDropDown />
+            </span>
           </span>
-        </span>
-      </div>
+        </div>
+      </Link>
       {/* -----------SignIn page--------------------------------- */}
 
       {/* -------------------Return  & order----------------------- */}
@@ -189,13 +194,16 @@ const Navbar = () => {
       {/* -------------------Return  & order----------------------- */}
 
       {/* ---------------cart----------------------------- */}
-      <div className="headerHover flex font-bold relative">
-        <span className="text-orange-600 text-lg absolute left-6 "> 0 </span>
-        <span>
-          <BsMinecart size={40} />
-        </span>
-        <span className="mt-2">Cart</span>
-      </div>
+      <Link to="/cart">
+        {" "}
+        <div className="headerHover flex font-bold relative">
+          <span className="text-orange-600 text-lg absolute left-6 ">{item.length}</span>
+          <span>
+            <BsMinecart size={40} />
+          </span>
+          <span className="mt-2">Cart</span>
+        </div>
+      </Link>
       {/* ---------------cart----------------------------- */}
     </div>
   );

@@ -47,3 +47,9 @@
 
 # task 5 
 - Routing reactRouting-6.4 
+
+# task 6
+- install packages @reduxjs/toolkit and react-redux
+- create slice
+- create appstore
+- provide appstore to store
