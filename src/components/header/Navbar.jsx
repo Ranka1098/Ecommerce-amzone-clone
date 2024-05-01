@@ -12,6 +12,9 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [search, setSearch] = useState(false);
+// prevent to scroll up page
+  nav?(document.body.style.overflow = "hidden") : (document.body.style.overflow = "auto");
+// prevent to scroll up page
 
   const item = useSelector(store => store.cart.cart)
   // --------------------overlay drawer----------------------
@@ -44,6 +47,7 @@ const Navbar = () => {
       </div>
       {/* -------------------logo------------------------- */}
 
+{/* ---------------------location-------------------- */}
       {/* overlay */}
       {nav ? (
         <div
@@ -66,14 +70,12 @@ const Navbar = () => {
                 </span>
 
                 <button className="py-2 bg-[#FFD814] text-black/70 rounded-lg my-2 hover:bg-yellow-500">
-                  {" "}
                   sign in to see your address
                 </button>
 
                 <div className="w-full text-sm text-gray my-1 flex items-center">
                   <span className="w-1/4 h-[1px] bg-gray-500 inline-flex"></span>
                   <span className="w-1/2 text-center">
-                    {" "}
                     or enter an indian pincode
                   </span>
                   <span className="w-1/4 h-[1px] bg-gray-500 inline-flex"></span>

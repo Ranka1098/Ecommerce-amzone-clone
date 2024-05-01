@@ -20,9 +20,8 @@ const Product = () => {
     productData();
   }, []);
 
-  if(product.length < 0 ) return <h1>data is loading</h1>
   return (
-    <div className="flex flex-wrap gap-1 relative -top-60" >
+    <div className="flex flex-wrap gap-4 relative -top-20 left-0 bg-gray-200 py-8" >
       {product.map((item) => (
         <div key={item.id} className="w-[300px] h-[300px] mx-auto  border-[1px] border-black flex flex-col items-center justify-between py-1">
            <img src={item.image} alt="" className="w-[80px] " />

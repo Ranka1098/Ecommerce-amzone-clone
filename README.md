@@ -53,3 +53,12 @@
 - create slice
 - create appstore
 - provide appstore to store
+
+# task 7
+- login page created
+- cart item info page created
+- shimmer ui create
+
+# task 8 Bug remove sucessfully
+- backToTop scrollup page feature sucessfully completed 
+- prevent background page scrolling sucessfully completed
