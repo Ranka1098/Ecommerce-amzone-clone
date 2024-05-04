@@ -12,7 +12,9 @@ const FooterTopButton = () => {
             Sign In
           </button></Link>
           <p className="text-xs">
-            New customer? <span className="text-blue-300"> Start here.</span>{" "}
+          <Link to="/newaccount">
+          New customer? <span className="text-blue-300"> Start here.</span>{" "}
+          </Link>
           </p>
         </div>
       </div>

@@ -6,7 +6,9 @@ const Home = () => {
   return (
     <div>
         <SimpleSlibeBar />
-        <Product />
+       <div className='-mt-64'>
+       <Product />
+       </div>
     </div>
   )
 }

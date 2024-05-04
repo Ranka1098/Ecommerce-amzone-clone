@@ -61,10 +61,10 @@ const SimpleSlibeBar = () => {
   };
   return (
     <div>
-      <Slider {...settings}>
+      <Slider {...settings} >
         {imgdata.map((item, index) => (
           <div key={index}>
-            <img src={item} alt="" className="w-full h-[85vh] relative z-20" />
+            <img src={item} alt="" className="w-full h-[95vh]" />
           </div>
         ))}
       </Slider>

@@ -5,6 +5,9 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
+import SingleProduct from "./pages/SingleProduct";
+import ProductDetail from "./pages/ProductDetail";
+import NewAccount from "./pages/NewAccount";
 
 const AppLayout = () => {
   return (
@@ -25,16 +28,29 @@ const appRouter = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      {
+        path: "/productdetail/:id",
+        element: <ProductDetail />,
+      },
     ],
   },
   {
-  path:"/cart",
-  element:<Cart />
+    path: "/product/",
+    element: <SingleProduct />,
+  },
+  
+  {
+    path: "/cart",
+    element: <Cart />,
   },
   {
-  path:"/login",
-  element:<Login />
-  }
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/newaccount",
+    element: <NewAccount />,
+  },
 ]);
 
 export default appRouter;

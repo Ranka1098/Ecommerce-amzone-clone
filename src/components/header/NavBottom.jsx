@@ -29,12 +29,12 @@ const NavBottom = () => {
       {/* ----------overlay----------------*/}
       {sidebar ? (
         <div
-          className="w-full h-screen fixed bg-black/45 top-0 left-0 z-10 duration-300"
+          className="w-full h-screen fixed bg-black/45 top-0 left-0 z-20 duration-300"
           ref={ref}
         ></div>
       ) : (
         <div
-          className="w-full h-screen fixed bg-black/45 top-0 left-[-100%] z-10 "
+          className="w-full h-screen fixed bg-black/45 top-0 left-[-100%] z-20 "
           ref={ref}
         ></div>
       )}
@@ -42,7 +42,7 @@ const NavBottom = () => {
       {/* --------sidebar div--------------- */}
       {/* --close button sidebar--- */}
       {sidebar && (
-        <div className="w-10 h-10 bg-tranparent flex justify-center items-center absolute  top-4 left-[25rem] z-30 duration-500">
+        <div className="w-10 h-10 bg-tranparent flex justify-center items-center absolute  top-2 left-[25rem] z-30 duration-500">
           <p className="text-4xl " onClick={() => setSideBar(!sidebar)}>
             X
           </p>
@@ -51,7 +51,7 @@ const NavBottom = () => {
       {/* --close button sidebar--- */}
 
       {sidebar && (
-        <div className="w-[25rem] h-[100vh] bg-white absolute top-4 left-0 text-black z-20 overflow-y-scroll">
+        <div className="w-[25rem] h-[100vh] bg-white absolute top-0 left-0 text-black z-30 overflow-y-scroll">
           <p className="bg-[#232F3E] text-xl text-white px-6 py-4 flex items-center gap-2">
             <span>
               <FaCircleUser size={30} />
