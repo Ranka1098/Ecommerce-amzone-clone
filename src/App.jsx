@@ -29,8 +29,12 @@ const appRouter = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/productdetail/:id",
+        path: "/product/:id",
         element: <ProductDetail />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
   },
@@ -39,10 +43,7 @@ const appRouter = createBrowserRouter([
     element: <SingleProduct />,
   },
   
-  {
-    path: "/cart",
-    element: <Cart />,
-  },
+  
   {
     path: "/login",
     element: <Login />,

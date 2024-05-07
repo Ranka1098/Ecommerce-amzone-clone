@@ -87,7 +87,7 @@ const NewAccount = () => {
 
           <p className="px-3 text-sm font-semibold flex items-center"> Buying For works?
           <Link
-              to="/login"
+            
               className="px-3  text-blue-400 loginLinks flex items-center"
             >
              Create free Bissness Account

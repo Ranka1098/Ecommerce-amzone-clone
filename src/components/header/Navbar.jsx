@@ -5,24 +5,36 @@ import { MdArrowDropDown } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { BsMinecart } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { ProductContext } from "../../context/ProductContext";
-import { useSelector } from "react-redux";
+import { fetchProducts } from "../../store/producrSlice";
+import { useDispatch, useSelector } from "react-redux";
 const Navbar = () => {
+  // ----navbar overlay----
   const [nav, setNav] = useState(false);
-  const [search, setSearch] = useState("");
+  // ----navbar overlay----
 
-  // search functionality
-  const productData = useContext(ProductContext);
+  // query
+  const [query, setQuery] = useState("");
+  // all product data
+  const { data: product } = useSelector((state) => state.product);
+  const { filterData: filterproduct } = useSelector((state) => state.product);
+  // filterde data
+
+  // query functionality
+  const handleOnchnge = (e) => {
+    setQuery(e.target.value);
+  };
+
   
-  const handleSearchClicked = (search, allproduct) => {
-    const filterproduct = allproduct?.filter((item) =>
-      item?.title?.toLowerCase().includes(search.toLowerCase())
+
+  useEffect(() => {
+    const filterproduct = product.filter((item) =>
+      item.title.toLowerCase().includes(query.toLocaleLowerCase())
     );
 
-    setSearch("");
-    return productData.setProduct(filterproduct);
-  };
-  // search functionality
+   
+  }, [query, product]);
+
+  // query functionality
 
   // prevent to scroll up page
   nav
@@ -30,7 +42,6 @@ const Navbar = () => {
     : (document.body.style.overflow = "auto");
   // prevent to scroll up page
 
-  const item = useSelector((store) => store.cart.cart);
   // --------------------overlay drawer----------------------
   const ref = useRef();
   useEffect(() => {
@@ -46,8 +57,8 @@ const Navbar = () => {
     <div className="w-full bg-[#131921] text-white px-8 py-2  flex items-center gap-1">
       {/* -------------------logo------------------------- */}
       <div className="headerHover">
-      <Link to="/">
-        <img src={logo} alt="logo" className="w-24 " />
+        <Link to="/">
+          <img src={logo} alt="logo" className="w-24 " />
         </Link>
       </div>
       {/* -------------------logo------------------------- */}
@@ -112,32 +123,40 @@ const Navbar = () => {
       </div>
       {/* ----------Location------------------------------ */}
 
-      {/* -------------------search-bar----------------------- */}
+      {/* -------------------query-bar----------------------- */}
       <div className="h-10 flex flex-grow rounded-md relative">
-        <span className="w-14 h-full flex items-center justify-center bg-gray-200 text-sm px-1 rounded-l-md text-gray-500 hover:text-gray-700">
+        {/* <span className="w-14 h-full flex items-center justify-center bg-gray-200 text-sm px-1 rounded-l-md text-gray-500 hover:text-gray-700">
           All
           <span>
             <MdArrowDropDown size={20} />
           </span>
-        </span>
+        </span> */}
         <input
           type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={query}
+          onChange={handleOnchnge}
           placeholder=" Search Amazone.in"
           className="h-full text-black flex-grow outline-none border-none px-2"
         />
+        {/* Drop down */}
 
-        <span
-          className="w-12 h-full flex items-center justify-center bg-[#FEBD69] hover:bg-[#f32847] duration-300 cursor-pointer rounded-r-md"
-          onClick={() =>
-            handleSearchClicked(search, productData.allproduct)
-          }
-        >
+        <div className="absolute top-12 left-0 right-0 bg-white text-black">
+          {query.length > 0 && (
+            <div className="mt-2">
+              {filterData.map((item) => (
+                <div key={item.id}  className="border-b py-2">
+                <Link to={"/product/" + item.id} >  <p>{item.title}</p> </Link>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* <span className="w-12 h-full flex items-center justify-center bg-[#FEBD69] hover:bg-[#f32847] duration-300 cursor-pointer rounded-r-md">
           <IoSearch />
-        </span>
+        </span> */}
       </div>
-      {/* -------------------search-bar----------------------- */}
+      {/* -------------------query-bar----------------------- */}
 
       {/* --------------------language------------------------- */}
 
@@ -186,9 +205,7 @@ const Navbar = () => {
       <Link to="/cart/">
         {" "}
         <div className="headerHover flex font-bold relative">
-          <span className="text-orange-600 text-lg absolute left-6 ">
-            {item.length}
-          </span>
+          <span className="text-orange-600 text-lg absolute left-6 "></span>
           <span>
             <BsMinecart size={40} />
           </span>

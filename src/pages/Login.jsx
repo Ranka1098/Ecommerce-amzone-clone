@@ -10,11 +10,10 @@ const Login = () => {
   const [passwordshow, setPasswordShow] = useState(false);
 
   const navigate = useNavigate();
-  const handleNavigate = ()=>{
-navigate("/newaccount")
-
-  }
-  return ( 
+  const handleNavigate = () => {
+    navigate("/newaccount");
+  };
+  return (
     <div className="flex flex-col">
       <div className="max-w-5xl mx-auto border-b pb-5">
         {/* -------image---------------- */}
@@ -108,7 +107,10 @@ navigate("/newaccount")
         </div>
 
         <div className="w-[400px] px-3 mx-auto text-black flex items-center justify-center ">
-          <button className="py-1 w-full border border-[#D5D9D9] rounded-md" onClick={handleNavigate}>
+          <button
+            className="py-1 w-full border border-[#D5D9D9] rounded-md"
+            onClick={handleNavigate}
+          >
             Create Your Amazon Account
           </button>
         </div>
@@ -116,13 +118,19 @@ navigate("/newaccount")
       <div className="w-[500px]  mx-auto flex flex-col items-center justify-center my-1 bg-gradient-to-t from-bg-[">
         {/* links */}
         <div className="flex  items-center gap-10 mt-6 mb-2 ">
-          <Link className="text-xs text-blue-400 loginLinks">
-            Condtion of Use
-          </Link>
-          <Link className="text-xs text-blue-400 loginLinks">
-            Privacy Notice
-          </Link>
-          <Link className="text-xs text-blue-400 loginLinks">Help </Link>
+          <div>
+            <Link className="text-xs text-blue-400 loginLinks">
+              Condtion of Use
+            </Link>
+          </div>
+          <div>
+            <Link className="text-xs text-blue-400 loginLinks">
+              Privacy Notice
+            </Link>
+          </div>
+          <div>
+            <Link className="text-xs text-blue-400 loginLinks">Help </Link>
+          </div>
         </div>
         {/* copyright */}
         <p className="text-xs">

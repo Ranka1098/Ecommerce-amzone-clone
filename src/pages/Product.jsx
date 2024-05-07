@@ -1,22 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import SingleProduct from "../pages/SingleProduct";
-import { ProductContext } from "../context/ProductContext";
 import Shimmer from "../components/Shimmer";
 import { Link } from "react-router-dom";
 
-const Products = () => {
-  const productData = useContext(ProductContext);
-  
-  console.log(productData)
+import { fetchProducts } from "../store/producrSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-  return  productData.length ? (
-    <Shimmer />
-  ) : (
-    <div className="flex flex-wrap justify-center gap-6   relative z-10  ">
-      {productData?.product?.map((item) => (
-        <Link to={"/productdetail/" + item.id} key={item.id}>
+const Products = () => {
+  const dispatch = useDispatch();
+
+  const { data:product } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
+  return (
+    <div className="w-full h-full py-4 flex flex-wrap justify-center gap-14 relative z-10 bg-[#EBEDEC] ">
+      {product?.map((item) => (
+        <div  key={item.id}>
+          <Link to={"/product/" + item.id} key={item.id} >
           <SingleProduct data={item} />
-        </Link>
+          </Link>
+        </div>
       ))}
     </div>
   );
