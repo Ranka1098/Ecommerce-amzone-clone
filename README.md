@@ -62,3 +62,13 @@
 # task 8 Bug remove sucessfully
 - backToTop scrollup page feature sucessfully completed 
 - prevent background page scrolling sucessfully completed
+
+
+# task 9 
+- shimmer ui completed
+
+# task 10 remainig
+- cart check out page
+- search bar
+- responsive
+- validation

@@ -38,7 +38,7 @@ export function fetchProducts() {
       const resp = await fetch("https://fakestoreapi.com/products");
       const result = await resp.json();
       dispatch(setProducts(result));
-      dispatch(setFilterProduct(result));
+      // dispatch(setFilterProduct(result));
       dispatch(setStatuses(STATUSES.IDLE));
     } catch (err) {
       console.log("unable to fetch", err);

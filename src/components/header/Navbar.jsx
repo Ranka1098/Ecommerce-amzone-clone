@@ -2,36 +2,36 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { india, logo } from "../../assets";
 import { CiLocationOn } from "react-icons/ci";
 import { MdArrowDropDown } from "react-icons/md";
-import { IoSearch } from "react-icons/io5";
 import { BsMinecart } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { fetchProducts } from "../../store/producrSlice";
+import { setFilterProduct } from "../../store/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 const Navbar = () => {
   // ----navbar overlay----
   const [nav, setNav] = useState(false);
   // ----navbar overlay----
 
+  const dispatch = useDispatch();
   // query
   const [query, setQuery] = useState("");
   // all product data
-  const { data: product } = useSelector((state) => state.product);
-  const { filterData: filterproduct } = useSelector((state) => state.product);
+  const cartitem = useSelector((store) => store?.cart?.cartProduct);
+  const product = useSelector((store) => store.product.data);
   // filterde data
-
+  const handleMenuLinkClicked = () => {
+    setQuery("");
+  };
   // query functionality
   const handleOnchnge = (e) => {
     setQuery(e.target.value);
   };
-
-  
 
   useEffect(() => {
     const filterproduct = product.filter((item) =>
       item.title.toLowerCase().includes(query.toLocaleLowerCase())
     );
 
-   
+    dispatch(setFilterProduct(filterproduct));
   }, [query, product]);
 
   // query functionality
@@ -143,9 +143,15 @@ const Navbar = () => {
         <div className="absolute top-12 left-0 right-0 bg-white text-black">
           {query.length > 0 && (
             <div className="mt-2">
-              {filterData.map((item) => (
-                <div key={item.id}  className="border-b py-2">
-                <Link to={"/product/" + item.id} >  <p>{item.title}</p> </Link>
+              {product.map((item) => (
+                <div key={item.id} className="border-b py-2">
+                  <Link
+                    to={"/product/" + item.id}
+                    onclick={handleMenuLinkClicked}
+                  >
+                    {" "}
+                    <p>{item.title}</p>{" "}
+                  </Link>
                 </div>
               ))}
             </div>
@@ -205,7 +211,9 @@ const Navbar = () => {
       <Link to="/cart/">
         {" "}
         <div className="headerHover flex font-bold relative">
-          <span className="text-orange-600 text-lg absolute left-6 "></span>
+          <span className="text-orange-600 text-lg absolute left-6 ">
+            {cartitem.length}
+          </span>
           <span>
             <BsMinecart size={40} />
           </span>
