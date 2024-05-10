@@ -45,7 +45,7 @@ const Cart = () => {
                   key={item.id}
                   className="  flex justify-between items-center gap-2 border-b-2 border-b-black "
                 >
-                  <div className="py-1 w-[15rem] h-[10rem]">
+                  <div className="py-1 w-[15rem] ">
                     <img src={item.image} alt="" />
                   </div>
 

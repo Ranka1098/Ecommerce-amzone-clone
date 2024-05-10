@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 const Navbar = () => {
   // ----navbar overlay----
   const [nav, setNav] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+
   // ----navbar overlay----
 
   const dispatch = useDispatch();
@@ -18,9 +20,7 @@ const Navbar = () => {
   const cartitem = useSelector((store) => store?.cart?.cartProduct);
   const product = useSelector((store) => store.product.data);
   // filterde data
-  const handleMenuLinkClicked = () => {
-    setQuery((query.length = ""));
-  };
+
   // query functionality
   const handleOnchnge = (e) => {
     setQuery(e.target.value);
@@ -35,6 +35,10 @@ const Navbar = () => {
 
     dispatch(setFilterProduct(filterproduct));
   }, [query, product]);
+
+  const handleMenuClicked = () => {
+    setQuery("");
+  };
 
   // query functionality
 
@@ -138,27 +142,30 @@ const Navbar = () => {
           value={query}
           onChange={handleOnchnge}
           placeholder=" Search Amazone.in"
-          className="h-full text-black flex-grow outline-none border-none px-2"
+          className="h-full text-black flex-grow focus:outline-none focus:ring-4 focus:ring-orange-500 rounded-lg border-none px-2"
         />
         {/* Drop down */}
-
-        <div
-          className="absolute top-12 left-0 right-0 bg-white text-black"
-          
-        >
+        <div className="absolute top-12 left-0 right-0 bg-white text-black">
           {query.length > 0 && (
-            <div className="mt-2">
+            // ------------------------------------------------------
+            <div>
               {filterData.slice(0, 5).map((item) => (
-                <div key={item.id} className="border-b py-2" >
-                  <Link to={"/product/" + item.id} >
-                    <p className="hover:bg-gray-200 p-1" onClick={handleMenuLinkClicked}>{item.title}</p>
+                <div key={item.id} className="border-b py-2">
+                  <Link to={"/product/" + item.id}>
+                    <p
+                      className="hover:bg-gray-200 p-1"
+                      onClick={handleMenuClicked}
+                    >
+                      {item.title}
+                    </p>
                   </Link>
                 </div>
               ))}
             </div>
+            // ------------------------------------------------------
           )}
         </div>
-
+        :
         {/* <span className="w-12 h-full flex items-center justify-center bg-[#FEBD69] hover:bg-[#f32847] duration-300 cursor-pointer rounded-r-md">
           <IoSearch />
         </span> */}

@@ -16,7 +16,7 @@ const SimpleSlibeBar = () => {
           position: "absolute",
           top: "50%",
           right: "0",
-          width: "40px",
+          width: "80px",
           height: "100%",
           display: "flex",
           alignItems: "center",
@@ -39,11 +39,12 @@ const SimpleSlibeBar = () => {
           top: "50%",
           left: "0",
           zIndex: 1,
-          width: "40px",
+          width: "80px",
           height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display:"flex",
+          justifyContent:"center",
+          alignItems:"center"
+         
         }}
         onClick={onClick}
       />
@@ -51,7 +52,6 @@ const SimpleSlibeBar = () => {
   }
 
   var settings = {
-    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -60,11 +60,11 @@ const SimpleSlibeBar = () => {
     prevArrow: <SamplePrevArrow />,
   };
   return (
-    <div>
+    <div className="w-full h-[95vh] bg-orange">
       <Slider {...settings} >
         {imgdata.map((item, index) => (
           <div key={index}>
-            <img src={item} alt="" className="w-full h-[95vh]" />
+            <img src={item} alt=""  />
           </div>
         ))}
       </Slider>

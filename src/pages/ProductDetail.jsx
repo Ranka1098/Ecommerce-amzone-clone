@@ -43,7 +43,7 @@ const ProductDetail = () => {
         <img
           src={pdata?.image}
           alt=""
-          className="w-[350px] h-[350px] object-contain  bg-gray-100 "
+          className="w-[350px] h-[350px] object-contain "
         />
       </div>
       <div className=" mt-20 ml-24">
