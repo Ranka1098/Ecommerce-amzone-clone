@@ -72,3 +72,13 @@
 - search bar
 - responsive
 - validation
+
+# cart
+- addCart
+- clearCart
+- removeCart
+- quantity total
+- increament , decrement
+
+# bug
+- sticky navbar fixed

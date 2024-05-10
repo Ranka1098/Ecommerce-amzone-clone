@@ -19,12 +19,14 @@ const Navbar = () => {
   const product = useSelector((store) => store.product.data);
   // filterde data
   const handleMenuLinkClicked = () => {
-    setQuery("");
+    setQuery((query.length = ""));
   };
   // query functionality
   const handleOnchnge = (e) => {
     setQuery(e.target.value);
   };
+
+  const filterData = useSelector((store) => store.product.filterData);
 
   useEffect(() => {
     const filterproduct = product.filter((item) =>
@@ -54,7 +56,7 @@ const Navbar = () => {
   // --------------------overlay drawer----------------------
 
   return (
-    <div className="w-full bg-[#131921] text-white px-8 py-2  flex items-center gap-1">
+    <div className="w-full bg-[#131921] text-white px-8 py-2  flex items-center gap-1 ">
       {/* -------------------logo------------------------- */}
       <div className="headerHover">
         <Link to="/">
@@ -140,17 +142,16 @@ const Navbar = () => {
         />
         {/* Drop down */}
 
-        <div className="absolute top-12 left-0 right-0 bg-white text-black">
+        <div
+          className="absolute top-12 left-0 right-0 bg-white text-black"
+          
+        >
           {query.length > 0 && (
             <div className="mt-2">
-              {product.map((item) => (
-                <div key={item.id} className="border-b py-2">
-                  <Link
-                    to={"/product/" + item.id}
-                    onclick={handleMenuLinkClicked}
-                  >
-                    {" "}
-                    <p>{item.title}</p>{" "}
+              {filterData.slice(0, 5).map((item) => (
+                <div key={item.id} className="border-b py-2" >
+                  <Link to={"/product/" + item.id} >
+                    <p className="hover:bg-gray-200 p-1" onClick={handleMenuLinkClicked}>{item.title}</p>
                   </Link>
                 </div>
               ))}
@@ -212,7 +213,7 @@ const Navbar = () => {
         {" "}
         <div className="headerHover flex font-bold relative">
           <span className="text-orange-600 text-lg absolute left-6 ">
-            {cartitem.length}
+            {cartitem.length > 0 ? cartitem.length : 0}
           </span>
           <span>
             <BsMinecart size={40} />

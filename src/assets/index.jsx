@@ -6,9 +6,11 @@ import  bannerImgTwo from "../assets/banner/bannerImgTwo.jpg"
 import  bannerImgThree from "../assets/banner/bannerImgThree.jpg"
 import  bannerImgFour from "../assets/banner/bannerImgFour.jpg"
 import  bannerImgFive from "../assets/banner/bannerImgFive.jpg"
+import emptyCart from "../assets/emptyCart.png"
  
 
 export {
+  emptyCart,
   logo,
   loginlogo,
   india,
