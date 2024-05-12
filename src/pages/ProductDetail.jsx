@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { addCart } from "../store/cartSlice";
 import ProductShimmer from "../components/shimmer/ProductShimmer";
+import { IoIosStar } from "react-icons/io";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -14,6 +15,7 @@ const ProductDetail = () => {
       const resp = await fetch(`https://fakestoreapi.com/products/${id}`);
       const result = await resp.json();
       setPData(result);
+      console.log(pdata);
     };
 
     getDetail();
@@ -24,7 +26,7 @@ const ProductDetail = () => {
       dispatch(
         addCart({
           id: pdata.id,
-          image:pdata.image,
+          image: pdata.image,
           title: pdata.title,
           category: pdata.category,
           description: pdata.description,
@@ -50,18 +52,26 @@ const ProductDetail = () => {
         <p className="font-bold text-2xl mb-4">{pdata?.title}</p>
         <p className="text-sm mb-2">{pdata?.category}</p>
         <p className="text-xl mb-2 w-[70%]">{pdata?.description}</p>
+        <p className="bg-green-400 w-[4rem] p-2 rounded-md font-bold flex items-center gap-1 ">
+          <span>
+            <IoIosStar />
+          </span>
+          {pdata.rating.rate}
+        </p>
         <p className="text-xl mb-2">$ {pdata?.price}</p>
 
         <button
           onClick={handleAddtoCart}
-          className="p-3 border border-gray-300 bg-blue-500 rounded-md font-semibold mr-4"
+          className="p-3 border border-gray-300 bg-orange-500 text-white rounded-md font-semibold mr-4"
         >
           Add To Cart
         </button>
-        
-       <Link to="/">
-       <button className="p-3 border border-gray-300 bg-blue-500 rounded-md font-semibold">back</button>
-       </Link>
+
+        <Link to="/">
+          <button className="p-3 border border-gray-300  bg-yellow-500 text-white rounded-md font-semibold">
+            back
+          </button>
+        </Link>
       </div>
     </div>
   );

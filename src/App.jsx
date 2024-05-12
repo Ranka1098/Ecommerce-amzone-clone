@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import SingleProduct from "./pages/SingleProduct";
 import ProductDetail from "./pages/ProductDetail";
 import NewAccount from "./pages/NewAccount";
+import Order from "./pages/Order";
 
 const AppLayout = () => {
   return (
@@ -37,6 +38,11 @@ const appRouter = createBrowserRouter([
         path: "/cart",
         element: <Cart />,
       },
+      {
+        path:"/order",
+        element:<Order />
+
+      }
     ],
   },
   {

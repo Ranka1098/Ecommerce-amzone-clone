@@ -31,7 +31,7 @@ const Cart = () => {
   return (
     <div>
       {product.length > 0 ? (
-        <div className="w-full  bg-gray-200 p-4 flex  gap-4">
+        <div className="w-full h-[84vh]  bg-gray-200 p-4 flex  gap-4">
           {/* product detail page */}
           <div className="w-[75%] bg-white p-4 ">
             <div className="flex justify-between  border-b-2 py-2  border-b-black">
@@ -62,7 +62,7 @@ const Cart = () => {
                       >
                         -
                       </button>
-                      <p className="text-2xl text-black">{item.quantity}</p>
+                      <p className="text-2xl text-black">{item.quantity} </p>
                       <button
                         className="py-1 text-2xl font-bold bg-gray-200  "
                         onClick={() => dispatch(incrementQuantity(item.id))}
@@ -110,13 +110,15 @@ const Cart = () => {
             <p className="text-xl py-2 font-bold text-center">
               Total: <span>${totalprice}</span>
             </p>
-            <button className="w-full p-2 bg-yellow-500 border-2 border-black rounded-md font-semibold ">
+           <Link to="/order">
+           <button className="w-full p-2 bg-yellow-500 border-2 border-black rounded-md font-semibold ">
               Proceed to Pay
             </button>
+           </Link>
           </div>
         </div>
       ) : (
-        <div className="w-[100%] h-[25rem] bg-gray-200 flex items-center justify-center">
+        <div className="w-[100%] h-[84vh] bg-gray-200 flex items-center justify-center">
           <img src={emptyCart} alt="" />
           <div className="w-[20rem]  p-3  bg-white flex flex-col items-center justify-center gap-2">
             <p className="font-black text-xl text-center">Your Cart feels lonely.</p>

@@ -60,7 +60,7 @@ const Navbar = () => {
   // --------------------overlay drawer----------------------
 
   return (
-    <div className="w-full bg-[#131921] text-white px-8 py-2  flex items-center gap-1 ">
+    <div className="  w-full  bg-[#131921] text-white px-8 py-2  flex items-center gap-1 ">
       {/* -------------------logo------------------------- */}
       <div className="headerHover">
         <Link to="/">
@@ -131,12 +131,6 @@ const Navbar = () => {
 
       {/* -------------------query-bar----------------------- */}
       <div className="h-10 flex flex-grow rounded-md relative">
-        {/* <span className="w-14 h-full flex items-center justify-center bg-gray-200 text-sm px-1 rounded-l-md text-gray-500 hover:text-gray-700">
-          All
-          <span>
-            <MdArrowDropDown size={20} />
-          </span>
-        </span> */}
         <input
           type="text"
           value={query}
@@ -150,13 +144,14 @@ const Navbar = () => {
             // ------------------------------------------------------
             <div>
               {filterData.slice(0, 5).map((item) => (
-                <div key={item.id} className="border-b py-2">
+                <div key={item.id} className="border-b py-2 ">
                   <Link to={"/product/" + item.id}>
                     <p
-                      className="hover:bg-gray-200 p-1"
-                      onClick={handleMenuClicked}
+                      className="hover:bg-gray-200 p-1 flex justify-between items-center px-8 "
+                      onClick={handleMenuClicked} 
                     >
                       {item.title}
+                     <img src={item.image} alt="" className="w-8" />
                     </p>
                   </Link>
                 </div>
@@ -165,10 +160,7 @@ const Navbar = () => {
             // ------------------------------------------------------
           )}
         </div>
-        :
-        {/* <span className="w-12 h-full flex items-center justify-center bg-[#FEBD69] hover:bg-[#f32847] duration-300 cursor-pointer rounded-r-md">
-          <IoSearch />
-        </span> */}
+       
       </div>
       {/* -------------------query-bar----------------------- */}
 
@@ -210,8 +202,10 @@ const Navbar = () => {
 
       {/* -------------------Return  & order----------------------- */}
       <div className="headerHover flex flex-col">
-        <span className=" text-sm -mb-2"> Returns</span>
-        <span className="font-bold flex text-sm">& Orders </span>
+        <Link to="/order" >
+        <span className=" text-sm -mb-2">Orders  </span>
+        <span className="font-bold flex text-sm">& Returns </span>
+        </Link>
       </div>
       {/* -------------------Return  & order----------------------- */}
 

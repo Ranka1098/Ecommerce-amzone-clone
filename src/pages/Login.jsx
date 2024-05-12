@@ -9,6 +9,57 @@ const Login = () => {
   const [help, setHelp] = useState(false);
   const [passwordshow, setPasswordShow] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [erremail, setErrEmail] = useState("");
+  const [errpassword, setErrPassword] = useState("");
+
+  // validation
+  const emailValidation = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/);
+  };
+  const passwordValidation = (password) => {
+    return String(password)
+      .toLowerCase()
+      .match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      setErrEmail(" Enter Email");
+    } else {
+      if (!emailValidation(email)) {
+        setErrEmail("Enter Valid Email Address");
+      }
+    }
+    if (!password) {
+      setErrPassword("Enter Valid password");
+    } else {
+      if (!passwordValidation(email)) {
+        setErrPassword("8 latter,lowercase,uppercase and SpecialSymbol");
+      }
+    }
+
+    if (email && password && emailValidation(email) && passwordValidation(password)) {
+      setEmail(""), setPassword(""),erremail(""),errpassword("");
+    }
+  };
+
+ 
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+    setErrEmail("");
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+    setErrPassword("");
+  };
+
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("/newaccount");
@@ -23,28 +74,46 @@ const Login = () => {
         </div>
         {/* sign in */}
         <div className="w-[400px] p-4 mx-auto flex items-center justify-center  border rounded-md my-2">
-          <form onSubmit={(e) => e.preventDefault()}>
+          <div onSubmit={handleSubmit}>
             <h1 className="text-3xl px-3  py-3 font-semibold">Sign in</h1>
             <div className="flex flex-col  px-3  py-3 text-black ">
               {/* Email */}
-              <label className="text-sm font-bold py-1 ">
-                Email or Mobile Phone Number{" "}
-              </label>
+              <label className="text-sm font-bold py-1 ">Email</label>
               <input
                 type="text"
+                value={email}
+                onChange={handleEmail}
                 placeholder="Email Here..."
                 className="flex-grow py-1 px-2 mb-4 border border-black rounded-md"
               />
+              {erremail && (
+                <p className="text-red-500 -mt-2 text-sm font-semibold">
+                  <span className="text-red-500 -mt-2 text-sm font-semibold">
+                    *
+                  </span>
+                  {erremail}
+                </p>
+              )}
 
               {/* password */}
               <div className="relative">
                 <label className="text-sm font-bold py-1 ">password</label>
                 <input
                   type={passwordshow ? "text" : "password"}
+                  onChange={handlePassword}
+                  value={password}
                   placeholder="password Here..."
                   autoComplete="current-password"
                   className="flex-grow w-full py-1 px-2 mb-4 border border-black rounded-md"
                 />
+                {errpassword && (
+                  <p className="text-red-500 -mt-2 mb-2 text-sm font-semibold">
+                    <span className="text-red-500 -mt-2 text-sm font-semibold">
+                      *
+                    </span>{" "}
+                    {errpassword}
+                  </p>
+                )}
                 <button
                   className="absolute right-5  top-8"
                   onClick={() => setPasswordShow(!passwordshow)}
@@ -96,7 +165,7 @@ const Login = () => {
             <Link className="px-3  text-blue-400 loginLinks">
               Shop on Amazon Business
             </Link>
-          </form>
+          </div>
         </div>
 
         {/* ----------------------------------------------  */}
@@ -108,7 +177,7 @@ const Login = () => {
 
         <div className="w-[400px] px-3 mx-auto text-black flex items-center justify-center ">
           <button
-            className="py-1 w-full border border-[#D5D9D9] rounded-md"
+            className="py-1 w-full border border-[#D5D9D9] bg-gray-200 rounded-md"
             onClick={handleNavigate}
           >
             Create Your Amazon Account
