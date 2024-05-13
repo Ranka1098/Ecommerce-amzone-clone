@@ -16,7 +16,7 @@ const Cart = () => {
     if (product.length > 0) {
       product.forEach((item) => {
         total += item.price * item.quantity;
-        seTotalPrice(total);
+        seTotalPrice(total.toFixed(2));
       });
     }
   }, [product]);
@@ -85,7 +85,7 @@ const Cart = () => {
 
                   <button className="flex  items-center gont-bold text-2xl">
                     <span className="px-2">$</span>{" "}
-                    {item.price * item.quantity.toFixed(2)}
+                    {(item.price * item.quantity).toFixed(2)}
                   </button>
                 </div>
               ))}

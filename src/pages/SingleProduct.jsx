@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StarRating from "../components/StarRating";
 
-
 const SingleProduct = ({ data }) => {
   const { image, title, price, description, category } = data;
   return (
@@ -18,12 +17,13 @@ const SingleProduct = ({ data }) => {
         <h4>$ {price}</h4>
       </div>
       <h5 className="px-3 text-sm">{description.substr(0, 100)}</h5>
-      <Link
-        to={"/product/" + data.id}
-        className="w-full py-1 text-center bg-yellow-400 font-bold text-md rounded "
-      >
-        <button>Buy Now</button>
-      </Link>
+      <div className="w-full">
+        <Link to={"/product/" + data.id} className="w-full">
+          <button className="w-full py-1 px-2 text-center bg-yellow-400 font-bold text-md rounded ">
+            Buy Now
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

@@ -18,87 +18,89 @@ const NewAccount = () => {
 
   // validation
   const emailValidation = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/);
+    return /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(email);
   };
 
   const passwordValidation = (password) => {
-    return String(password)
-      .toLowerCase()
-      .match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
+    return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
+      password
+    );
   };
+
+  //-------------------------------
+  function handleName(e) {
+    setClientName(e.target.value);
+    setErrClientName("");
+  }
+  function handleEmail(e) {
+    setEmail(e.target.value);
+    setErrEmail("");
+  }
+
+  function handlePassword(e) {
+    setPassword(e.target.value);
+    setErrPassword("");
+  }
+  function handleCurrentPassword(e) {
+    setCurrentPassword(e.target.value);
+    setErrCurrentPassword("");
+  }
+
+  //-------------------------------
+
+  // --submit form----------------
 
   const handleRegisterForm = (e) => {
     e.preventDefault();
-    console.log("submit form")
 
     if (!clientName) {
-      setErrClientName("enter your Name");
+      setErrClientName("enter Your Name");
     }
+
     if (!email) {
-      setErrEmail("enter your Email");
-    } else {
-      if (!emailValidation(email)) {
-        setErrEmail("plss enter valid mail");
-      }
+      setErrEmail("enter email");
+    } else if (!emailValidation(email)) {
+      setErrEmail("enter correct email");
     }
 
     if (!password) {
-      setErrPassword("enter your Password");
-    } else {
-      if (!passwordValidation(password)) {
-        setErrPassword(
-          "password must be 8 character uperCase,lowerCase and special Symbol"
-        );
-      }
+      setErrPassword("enter password");
+    } else if (!passwordValidation(password)) {
+      setErrPassword("8 character,uppercase,lowercase,SpecialSymbol");
     }
 
     if (!currentPassword) {
-      setErrCurrentPassword("enter your Same-Password");
+      setErrCurrentPassword("enter current password");
     } else if (currentPassword !== password) {
-      setErrCurrentPassword("enter your Same-Password");
+      setErrCurrentPassword("password not matched");
     }
 
     if (
-      (clientName &&
-        email &&
-        password &&
-        currentPassword &&
-        emailValidation(email),
-      passwordValidation(password))
+      clientName &&
+      email &&
+      password &&
+      currentPassword &&
+      emailValidation(email) &&
+      passwordValidation(password) &&
+      currentPassword === password
     ) {
-      setClientName(""),
-        setEmail(""),
-        password(""),
-        currentPassword(""),
-        erremail(""),
-        errpassword("");
+      setClientName("");
+      setEmail("");
+      setPassword("");
+      setCurrentPassword("");
+      setErrEmail("");
+      setErrPassword("");
     }
   };
-
-  const handleName = (e) => {
-    setClientName(e.target.value);
-    setErrClientName("");
-  };
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-    setErrEmail("");
-  };
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-    setErrPassword("");
-  };
-  const handleCurrentPassword = (e) => {
-    setCurrentPassword(e.target.value);
-    setErrCurrentPassword("");
-  };
+  // --submit form----------------
 
   return (
     <div className="max-w-5xl mx-auto pb-5 ">
       {/* -------image---------------- */}
       <div className="w-[400px]  mx-auto flex items-center justify-center">
-        <img src={loginlogo} alt="" className="text-black" />
+       <Link to="/">
+       <img src={loginlogo} alt="" className="text-black" />
+       </Link>
         <p className="font-semibold -ml-2 text-xl">.in</p>
       </div>
 
@@ -174,7 +176,10 @@ const NewAccount = () => {
               </p>
             )}
 
-            <button className="w-full py-1 bg-[#FFD814] rounded-md">
+            <button
+              type="submit"
+              className="w-full py-1 bg-[#FFD814] rounded-md"
+            >
               Continue
             </button>
 

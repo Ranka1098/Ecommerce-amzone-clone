@@ -4,42 +4,38 @@ import { CiLocationOn } from "react-icons/ci";
 import { MdArrowDropDown } from "react-icons/md";
 import { BsMinecart } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { setFilterProduct } from "../../store/productSlice";
+import { setFilterProduct, setProducts } from "../../store/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 const Navbar = () => {
   // ----navbar overlay----
   const [nav, setNav] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
 
   // ----navbar overlay----
 
   const dispatch = useDispatch();
   // query
   const [query, setQuery] = useState("");
-  // all product data
   const cartitem = useSelector((store) => store?.cart?.cartProduct);
+  // api data stored in product
   const product = useSelector((store) => store.product.data);
-  // filterde data
-
-  // query functionality
-  const handleOnchnge = (e) => {
-    setQuery(e.target.value);
-  };
-
+  // all product stored in filterData
   const filterData = useSelector((store) => store.product.filterData);
-
+  // filterde data search query
   useEffect(() => {
     const filterproduct = product.filter((item) =>
       item.title.toLowerCase().includes(query.toLocaleLowerCase())
     );
-
     dispatch(setFilterProduct(filterproduct));
   }, [query, product]);
+
+  // filterde data search query
+  const handleOnchnge = (e) => {
+    setQuery(e.target.value);
+  };
 
   const handleMenuClicked = () => {
     setQuery("");
   };
-
   // query functionality
 
   // prevent to scroll up page
@@ -136,7 +132,7 @@ const Navbar = () => {
           value={query}
           onChange={handleOnchnge}
           placeholder=" Search Amazone.in"
-          className="h-full text-black flex-grow focus:outline-none focus:ring-4 focus:ring-orange-500 rounded-lg border-none px-2"
+          className="h-full text-black flex-grow focus:outline-none focus:ring-4 focus:ring-orange-500 rounded-r-lg border-none px-2"
         />
         {/* Drop down */}
         <div className="absolute top-12 left-0 right-0 bg-white text-black">
@@ -145,13 +141,13 @@ const Navbar = () => {
             <div>
               {filterData.slice(0, 5).map((item) => (
                 <div key={item.id} className="border-b py-2 ">
-                  <Link to={"/product/" + item.id}>
+                  <Link to={"/product/" + item.id} key={item.id}>
                     <p
                       className="hover:bg-gray-200 p-1 flex justify-between items-center px-8 "
-                      onClick={handleMenuClicked} 
+                      onClick={handleMenuClicked}
                     >
                       {item.title}
-                     <img src={item.image} alt="" className="w-8" />
+                      <img src={item.image} alt="" className="w-8" />
                     </p>
                   </Link>
                 </div>
@@ -160,7 +156,6 @@ const Navbar = () => {
             // ------------------------------------------------------
           )}
         </div>
-       
       </div>
       {/* -------------------query-bar----------------------- */}
 
@@ -202,9 +197,9 @@ const Navbar = () => {
 
       {/* -------------------Return  & order----------------------- */}
       <div className="headerHover flex flex-col">
-        <Link to="/order" >
-        <span className=" text-sm -mb-2">Orders  </span>
-        <span className="font-bold flex text-sm">& Returns </span>
+        <Link to="/order">
+          <span className=" text-sm -mb-2">Orders </span>
+          <span className="font-bold flex text-sm">& Returns </span>
         </Link>
       </div>
       {/* -------------------Return  & order----------------------- */}

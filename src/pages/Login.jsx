@@ -16,40 +16,39 @@ const Login = () => {
 
   // validation
   const emailValidation = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/);
+    return /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(email);
   };
+
   const passwordValidation = (password) => {
-    return String(password)
-      .toLowerCase()
-      .match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
+    return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
+      password
+    );
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrEmail(""), setErrPassword("");
 
+    console.log("submit");
     if (!email) {
-      setErrEmail(" Enter Email");
-    } else {
-      if (!emailValidation(email)) {
-        setErrEmail("Enter Valid Email Address");
-      }
-    }
-    if (!password) {
-      setErrPassword("Enter Valid password");
-    } else {
-      if (!passwordValidation(email)) {
-        setErrPassword("8 latter,lowercase,uppercase and SpecialSymbol");
-      }
+      setErrEmail("enter vaild email");
+    } else if (!emailValidation(email)) {
+      setErrEmail("valid email");
     }
 
-    if (email && password && emailValidation(email) && passwordValidation(password)) {
-      setEmail(""), setPassword(""),erremail(""),errpassword("");
+    if (!password) {
+      setErrPassword("plss valid password");
+    } else if (!passwordValidation(password)) {
+      setErrPassword("8 charecter uppercase,lowercase,specialSymbol");
+    }
+
+    if (
+      (email && password && emailValidation(email),
+      passwordValidation(password))
+    ) {
+      setEmail(""), setPassword("");
     }
   };
-
- 
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -69,14 +68,19 @@ const Login = () => {
       <div className="max-w-5xl mx-auto border-b pb-5">
         {/* -------image---------------- */}
         <div className="w-[400px]  mx-auto flex items-center justify-center">
+          <Link to="/">
           <img src={loginlogo} alt="" className="text-black" />
+          </Link>
           <p className="font-semibold -ml-2 text-xl">.in</p>
         </div>
         {/* sign in */}
         <div className="w-[400px] p-4 mx-auto flex items-center justify-center  border rounded-md my-2">
-          <div onSubmit={handleSubmit}>
+          <div>
             <h1 className="text-3xl px-3  py-3 font-semibold">Sign in</h1>
-            <div className="flex flex-col  px-3  py-3 text-black ">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col  px-3  py-3 text-black "
+            >
               {/* Email */}
               <label className="text-sm font-bold py-1 ">Email</label>
               <input
@@ -122,17 +126,19 @@ const Login = () => {
                 </button>
               </div>
 
-              <button className="w-full py-1 bg-[#FFD814] rounded-md">
+              <button
+                type="submit"
+                className="w-full py-1 bg-[#FFD814] rounded-md"
+              >
                 Continue
               </button>
-            </div>
+            </form>
             {/* ------------------------------------ */}
 
             <h4 className="text-sm p-3 font-semibold">
               By continuing, you agree to Amazon's
               <span className="text-blue-400 loginLinks">
-                {" "}
-                Conditions of Use{" "}
+                Conditions of Use
               </span>{" "}
               and{" "}
               <span className="text-blue-400 loginLinks">Privacy Notice.</span>

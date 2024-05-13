@@ -15,12 +15,10 @@ const ProductDetail = () => {
       const resp = await fetch(`https://fakestoreapi.com/products/${id}`);
       const result = await resp.json();
       setPData(result);
-      console.log(pdata);
     };
 
     getDetail();
   }, [id]);
-  console.log(pdata);
   const handleAddtoCart = () => {
     if (pdata) {
       dispatch(
