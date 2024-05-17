@@ -4,10 +4,27 @@ import { FaCaretDown, FaCaretRight } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { app } from "../firebase/FirebaseConfig";
+import { ThreeDots } from "react-loader-spinner";
+import { setUserInfo } from "../store/UserSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const auth = getAuth(app);
   const [help, setHelp] = useState(false);
   const [passwordshow, setPasswordShow] = useState(false);
+  //  loading state sart and end
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  //  loading state sart and end
+
+  // firebase error
+  const [firebaseEmailErr, setFirebaseEmailErr] = useState();
+  const [firebasePassErr, setFirebasePassErr] = useState();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,51 +42,86 @@ const Login = () => {
     );
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrEmail(""), setErrPassword("");
-
-    console.log("submit");
-    if (!email) {
-      setErrEmail("enter vaild email");
-    } else if (!emailValidation(email)) {
-      setErrEmail("valid email");
-    }
-
-    if (!password) {
-      setErrPassword("plss valid password");
-    } else if (!passwordValidation(password)) {
-      setErrPassword("8 charecter uppercase,lowercase,specialSymbol");
-    }
-
-    if (
-      (email && password && emailValidation(email),
-      passwordValidation(password))
-    ) {
-      setEmail(""), setPassword("");
-    }
-  };
-
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrEmail("");
+    setFirebaseEmailErr("");
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
     setErrPassword("");
+    setFirebasePassErr("");
   };
 
-  const navigate = useNavigate();
-  const handleNavigate = () => {
-    navigate("/newaccount");
+  // -----------submit the form--------------------
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email) {
+      setErrEmail("email field empty");
+    } else if (!emailValidation(email)) {
+      setErrEmail("enter valid email address");
+    }
+
+    if (!password) {
+      setErrPassword(" password field empty");
+    } else if (!passwordValidation(password)) {
+      setErrPassword(
+        "password sholud be 8 character,uppercase,lowercase,specialSymbaol & numaric"
+      );
+    }
+
+    if (
+      email &&
+      password &&
+      emailValidation(email) &&
+      passwordValidation(password)
+    ) {
+      // -------------sign in user----------------------
+      setLoading(true);
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          dispatch(
+            setUserInfo({
+              uid: user.uid,
+              uname: user.displayName,
+              uemail: user.email,
+              uphoto: user.photoURL,
+            })
+          );
+          setLoading(false);
+          setSuccessMsg("logged in successfull Welcome Back");
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+
+          if (errorCode.includes("auth/invalid-credential")) {
+            setFirebaseEmailErr("check email ya password");
+          }
+        });
+
+      // -------------sign in----------------------
+      setEmail(""), setPassword(""), setErrEmail(""), setErrPassword("");
+    }
   };
+  // -----------submit the form--------------------
+
   return (
     <div className="flex flex-col">
       <div className="max-w-5xl mx-auto border-b pb-5">
         {/* -------image---------------- */}
         <div className="w-[400px]  mx-auto flex items-center justify-center">
           <Link to="/">
-          <img src={loginlogo} alt="" className="text-black" />
+            <img src={loginlogo} alt="" className="text-black" />
           </Link>
           <p className="font-semibold -ml-2 text-xl">.in</p>
         </div>
@@ -91,11 +143,11 @@ const Login = () => {
                 className="flex-grow py-1 px-2 mb-4 border border-black rounded-md"
               />
               {erremail && (
-                <p className="text-red-500 -mt-2 text-sm font-semibold">
-                  <span className="text-red-500 -mt-2 text-sm font-semibold">
-                    *
-                  </span>
-                  {erremail}
+                <p className="text-red-500 font-semibold text-md">{erremail}</p>
+              )}
+              {firebaseEmailErr && (
+                <p className="text-red-500 font-semibold text-md">
+                  {firebaseEmailErr}
                 </p>
               )}
 
@@ -111,19 +163,21 @@ const Login = () => {
                   className="flex-grow w-full py-1 px-2 mb-4 border border-black rounded-md"
                 />
                 {errpassword && (
-                  <p className="text-red-500 -mt-2 mb-2 text-sm font-semibold">
-                    <span className="text-red-500 -mt-2 text-sm font-semibold">
-                      *
-                    </span>{" "}
+                  <p className="text-red-500 font-semibold text-md">
                     {errpassword}
                   </p>
                 )}
-                <button
-                  className="absolute right-5  top-8"
+                {firebasePassErr && (
+                  <p className="text-red-500 font-semibold text-md">
+                    {firebasePassErr}
+                  </p>
+                )}
+                <span
+                  className="absolute right-5  top-8 cursor-pointer"
                   onClick={() => setPasswordShow(!passwordshow)}
                 >
                   {passwordshow ? <FaEye /> : <FaEyeSlash />}
-                </button>
+                </span>
               </div>
 
               <button
@@ -132,6 +186,29 @@ const Login = () => {
               >
                 Continue
               </button>
+
+              {loading && (
+                <div className="flex justify-center items-center">
+                  <ThreeDots
+                    visible={true}
+                    height="80"
+                    width="80"
+                    color="#4fa94d"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />
+                </div>
+              )}
+
+              {successMsg && (
+                <div>
+                  <p className="text-green-600 font-bold flex items-center justify-center ">
+                    {successMsg}
+                  </p>
+                </div>
+              )}
             </form>
             {/* ------------------------------------ */}
 
@@ -184,7 +261,9 @@ const Login = () => {
         <div className="w-[400px] px-3 mx-auto text-black flex items-center justify-center ">
           <button
             className="py-1 w-full border border-[#D5D9D9] bg-gray-200 rounded-md"
-            onClick={handleNavigate}
+            onClick={() => {
+              navigate("/NewAccount");
+            }}
           >
             Create Your Amazon Account
           </button>

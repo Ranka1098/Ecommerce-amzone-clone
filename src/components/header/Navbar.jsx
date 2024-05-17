@@ -4,8 +4,10 @@ import { CiLocationOn } from "react-icons/ci";
 import { MdArrowDropDown } from "react-icons/md";
 import { BsMinecart } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { setFilterProduct, setProducts } from "../../store/productSlice";
+import { setFilterProduct } from "../../store/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import UserInfo from "../UserInfomation";
+import UserInformation from "../UserInfomation";
 const Navbar = () => {
   // ----navbar overlay----
   const [nav, setNav] = useState(false);
@@ -13,6 +15,8 @@ const Navbar = () => {
   // ----navbar overlay----
 
   const dispatch = useDispatch();
+  const userInfo = useSelector((store) => store.user.userInfo);
+  const [userDetail, setUserDetail] = useState(false);
   // query
   const [query, setQuery] = useState("");
   const cartitem = useSelector((store) => store?.cart?.cartProduct);
@@ -37,7 +41,9 @@ const Navbar = () => {
     setQuery("");
   };
   // query functionality
-
+  const handleUserInfo = () => {
+    setUserDetail(!userDetail);
+  };
   // prevent to scroll up page
   nav
     ? (document.body.style.overflow = "hidden")
@@ -132,7 +138,7 @@ const Navbar = () => {
           value={query}
           onChange={handleOnchnge}
           placeholder=" Search Amazone.in"
-          className="h-full text-black flex-grow focus:outline-none focus:ring-4 focus:ring-orange-500 rounded-r-lg border-none px-2"
+          className="h-full text-black flex-grow focus:outline-none focus:ring-4 focus:ring-orange-500 rounded-lg border-none px-2"
         />
         {/* Drop down */}
         <div className="absolute top-12 left-0 right-0 bg-white text-black">
@@ -180,19 +186,29 @@ const Navbar = () => {
       {/* --------------------language------------------------- */}
 
       {/* -----------SignIn page--------------------------------- */}
-      <Link to="/login">
-        <div className="flex flex-col headerHover">
+
+      <div className="realative flex flex-col headerHover" >
+        {userDetail ?<div className="absolute top-[65px] right-18">
+          <UserInformation /> 
+        </div>: ""}
+        {userInfo ? (
+          <span className=" text-sm text-white -mb-2"  onClick={handleUserInfo}> {userInfo.uname}</span>
+        ) : (
+          <div>
+          <Link to="/login">
           <span className=" text-sm -mb-2"> Hello, Sign In</span>
-          <span className="font-bold flex text-sm">
-            {" "}
-            Account & Lists{" "}
-            <span className="mt-2 text-gray-100">
-              {" "}
-              <MdArrowDropDown />
-            </span>
+          </Link>
+          </div>
+        )}
+
+        <span className="font-bold flex text-sm">
+          Account & Lists{" "}
+          <span className="mt-2 text-gray-100">
+            <MdArrowDropDown />
           </span>
-        </div>
-      </Link>
+        </span>
+      </div>
+
       {/* -----------SignIn page--------------------------------- */}
 
       {/* -------------------Return  & order----------------------- */}

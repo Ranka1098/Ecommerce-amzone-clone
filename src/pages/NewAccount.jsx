@@ -1,20 +1,47 @@
 import React, { useState } from "react";
 import { fLogin, gLogin, loginlogo } from "../assets";
-import { Link } from "react-router-dom";
-import { FaCaretRight } from "react-icons/fa6";
+import { Link, useNavigate } from "react-router-dom";
+import { FaCaretRight, FaEye, FaEyeSlash } from "react-icons/fa6";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { app } from "../firebase/FirebaseConfig";
+import firebase from "firebase/compat/app";
+import { RotatingLines, ThreeDots } from "react-loader-spinner";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../store/UserSlice";
+import { current } from "@reduxjs/toolkit";
 
 const NewAccount = () => {
+  // Initialize Firebase Authentication and get a reference to the service
+  // const auth = getAuth(app);
+  const auth = getAuth(app);
+
+  const [passwordshow, setPasswordShow] = useState(false);
+  const [samepasswordshow, setSamePasswordShow] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  //  loading state sart and end
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  //  loading state sart and end
+
   // user Info
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
+  const [samePassword, setSamePassword] = useState("");
 
   // Error Messages
   const [errclientName, setErrClientName] = useState("");
   const [erremail, setErrEmail] = useState("");
   const [errpassword, setErrPassword] = useState("");
-  const [errcurrentPassword, setErrCurrentPassword] = useState("");
+  const [errSamePassword, setErrSamePassword] = useState("");
+  const [firebaseErr, setFirebaseErr] = useState("");
 
   // validation
   const emailValidation = (email) => {
@@ -42,8 +69,8 @@ const NewAccount = () => {
     setErrPassword("");
   }
   function handleCurrentPassword(e) {
-    setCurrentPassword(e.target.value);
-    setErrCurrentPassword("");
+    setSamePassword(e.target.value);
+    setErrSamePassword("");
   }
 
   //-------------------------------
@@ -54,42 +81,73 @@ const NewAccount = () => {
     e.preventDefault();
 
     if (!clientName) {
-      setErrClientName("enter Your Name");
+      setErrClientName("Username is empty");
     }
-
+    // ------email-----------
     if (!email) {
-      setErrEmail("enter email");
+      setErrEmail("email filed empty");
     } else if (!emailValidation(email)) {
-      setErrEmail("enter correct email");
+      setErrEmail("enter valid email address");
     }
-
+    // ----password----------
     if (!password) {
-      setErrPassword("enter password");
+      setErrPassword("password field is empty");
     } else if (!passwordValidation(password)) {
-      setErrPassword("8 character,uppercase,lowercase,SpecialSymbol");
+      setErrPassword(
+        "password should have 8 character,uppercase,lowercase,specialSymbol and numaric"
+      );
+    }
+    // ----same password-------------
+    if (!samePassword) {
+      setErrSamePassword("password field empty");
+    } else if (samePassword !== password) {
+      setErrSamePassword("password is not matched enter same password");
     }
 
-    if (!currentPassword) {
-      setErrCurrentPassword("enter current password");
-    } else if (currentPassword !== password) {
-      setErrCurrentPassword("password not matched");
-    }
-
+    // ------submittion------------
     if (
       clientName &&
       email &&
       password &&
-      currentPassword &&
       emailValidation(email) &&
       passwordValidation(password) &&
-      currentPassword === password
+      samePassword === password
     ) {
-      setClientName("");
-      setEmail("");
-      setPassword("");
-      setCurrentPassword("");
-      setErrEmail("");
-      setErrPassword("");
+      // -----------create new user account------------
+      setLoading(true);
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          updateProfile(auth.currentUser, {
+            displayName: clientName,
+            photoURL:
+              "https://plus.unsplash.com/premium_photo-1664367173362-593de24d940e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHx8",
+          });
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+
+          setLoading(false);
+          setSuccessMsg("Account is created successfully");
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(error);
+          if (errorCode.includes("auth/email-already-in-use")) {
+            setFirebaseErr("email is already used, Try with new email ");
+          }
+          console.log("error code", errorCode);
+          console.log("error message", errorMessage);
+          // ..
+        });
+
+      // -------------------correct validation----------------
+      setClientName(""), setEmail(""), setPassword(""), setSamePassword("");
+      setErrEmail(""), setErrPassword(""), setErrSamePassword("");
     }
   };
   // --submit form----------------
@@ -98,9 +156,9 @@ const NewAccount = () => {
     <div className="max-w-5xl mx-auto pb-5 ">
       {/* -------image---------------- */}
       <div className="w-[400px]  mx-auto flex items-center justify-center">
-       <Link to="/">
-       <img src={loginlogo} alt="" className="text-black" />
-       </Link>
+        <Link to="/">
+          <img src={loginlogo} alt="" className="text-black" />
+        </Link>
         <p className="font-semibold -ml-2 text-xl">.in</p>
       </div>
 
@@ -114,6 +172,7 @@ const NewAccount = () => {
               onChange={handleName}
               value={clientName}
               type="text"
+              autocomplete="username"
               placeholder="Name Here..."
               className="flex-grow  py-1 px-2 mb-4 border border-black rounded-md"
             />
@@ -125,9 +184,7 @@ const NewAccount = () => {
             )}
 
             {/* Email */}
-            <label className="text-sm font-bold py-1 ">
-              Email or Mobile Phone Number{" "}
-            </label>
+            <label className="text-sm font-bold py-1 ">Email</label>
             <input
               onChange={handleEmail}
               type="text"
@@ -141,19 +198,32 @@ const NewAccount = () => {
                 {erremail}
               </p>
             )}
+            {firebaseErr && (
+              <p className="text-red-600 text-md font-semibold  text-base -mt-3">
+                {firebaseErr}
+              </p>
+            )}
 
             {/* password */}
             <label className="text-sm font-bold py-1 ">password</label>
-            <input
-              type="password"
-              onChange={handlePassword}
-              value={password}
-              placeholder="password Here..."
-              autoComplete="current-password"
-              className="flex-grow w-full py-1 px-2 mb-4 border border-black rounded-md"
-            />
+            <div className="relative">
+              <input
+                type={passwordshow ? "text" : "password"}
+                onChange={handlePassword}
+                value={password}
+                placeholder="password Here..."
+                autoComplete="current-password"
+                className="flex-grow w-full py-1 px-2 mb-4 border border-black rounded-md"
+              />
+              <span
+                className="absolute right-7  top-2 cursor-pointer z-20"
+                onClick={() => setPasswordShow(!passwordshow)}
+              >
+                {passwordshow ? <FaEye /> : <FaEyeSlash />}
+              </span>
+            </div>
             {errpassword && (
-              <p className="text-red-600 text-md font-semibold  text-base -mt-3">
+              <p className="text-red-600 text-xs font-semibold  -mt-3">
                 <span className="px-1 text-md font-semibold text-xl">!</span>
                 {errpassword}
               </p>
@@ -161,27 +231,56 @@ const NewAccount = () => {
 
             {/*same password */}
             <label className="text-sm font-bold py-1 ">Re-enter password</label>
-            <input
-              type="password"
-              onChange={handleCurrentPassword}
-              value={currentPassword}
-              placeholder="password Here..."
-              autoComplete="current-password"
-              className="flex-grow w-full py-1 px-2 mb-4 border border-black rounded-md"
-            />
-            {errcurrentPassword && (
+            <div className="relative">
+              <input
+                type={samepasswordshow ? "text" : "password"}
+                onChange={handleCurrentPassword}
+                value={samePassword}
+                placeholder="password Here..."
+                autoComplete="current-password"
+                className="flex-grow w-full py-1 px-2 mb-4 border border-black rounded-md"
+              />
+              <span
+                className="absolute right-7  top-2 cursor-pointer z-20"
+                onClick={() => setSamePasswordShow(!samepasswordshow)}
+              >
+                {setSamePasswordShow ? <FaEye /> : <FaEyeSlash />}
+              </span>
+            </div>
+            {errSamePassword && (
               <p className="text-red-600 text-md font-semibold  text-base -mt-3">
                 <span className="px-1 text-md font-semibold text-xl">!</span>
-                {errcurrentPassword}
+                {errSamePassword}
               </p>
             )}
-
+            <p className=" text-red-600 text-lg py-1">{}</p>
             <button
               type="submit"
               className="w-full py-1 bg-[#FFD814] rounded-md"
             >
               Continue
             </button>
+
+            {loading && (
+              <div className="flex justify-center items-center">
+                <RotatingLines
+                  visible={true}
+                  width="50"
+                  color="#FFD814"
+                  strokeWidth="5"
+                  animationDuration="0.75"
+                  ariaLabel="rotating-lines-loading"
+                />
+              </div>
+            )}
+
+            {successMsg && (
+              <div>
+                <p className="text-green-600 border-1 border-green-500 p-2 shadow-lg my-2 font-bold flex items-center justify-center ">
+                  {successMsg}
+                </p>
+              </div>
+            )}
 
             <div className="w-full flex items-center px-1">
               <Link className="w-[50%] cursor-pointer">

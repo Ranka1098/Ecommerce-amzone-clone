@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { FaCircleUser } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 const NavBottom = () => {
   const [sidebar, setSideBar] = useState(false);
@@ -11,8 +12,9 @@ const NavBottom = () => {
     : (document.body.style.overflow = "auto");
   // prevent to scroll lock
 
+  const userInfo = useSelector((store) => store.user.userInfo);
+  console.log(userInfo);
 
-  
   // --------------------overlay drawer----------------------
   const ref = useRef();
 
@@ -54,9 +56,14 @@ const NavBottom = () => {
         <div className="w-[25rem] h-[100vh] bg-white absolute top-0 left-0 text-black z-30 overflow-y-scroll">
           <p className="bg-[#232F3E] text-xl text-white px-6 py-4 flex items-center gap-2">
             <span>
-              <FaCircleUser size={30} />
+              {userInfo ? (
+                <img src={userInfo.uphoto} className="w-10 rounded-md" />
+              ) : (
+                <FaCircleUser size={30} />
+              )}
             </span>
-            Hello, Sign In
+            Hello
+            {userInfo ? <p>{userInfo.uname}</p> : ""}
           </p>
           <div className="p-4 border-b border-b-black ">
             <p className="font-bold text-lg px-6 py-4">Trading</p>
@@ -64,7 +71,7 @@ const NavBottom = () => {
             <p className="text-md text-gray-500 px-6 py-2">New Release</p>
             <p className="text-md text-gray-500 px-6 py-2">Mover and Shakers</p>
           </div>
-            {/* ----------------------------------------------- */}
+          {/* ----------------------------------------------- */}
           <div className="p-4 border-b border-b-black ">
             <p className="font-bold text-lg px-6 py-4">
               Digital Content and Devices
@@ -73,8 +80,8 @@ const NavBottom = () => {
             <p className="text-md text-gray-500 px-6 py-2">Fire TV</p>
             <p className="text-md text-gray-500 px-6 py-2">Mover and Shakers</p>
           </div>
-            {/* ------------------------------------------------ */}
-            {/* ----------------------------------------------- */}
+          {/* ------------------------------------------------ */}
+          {/* ----------------------------------------------- */}
           <div className="p-4 border-b border-b-black ">
             <p className="font-bold text-lg px-6 py-4">
               Digital Content and Devices
@@ -83,8 +90,8 @@ const NavBottom = () => {
             <p className="text-md text-gray-500 px-6 py-2">Fire TV</p>
             <p className="text-md text-gray-500 px-6 py-2">Mover and Shakers</p>
           </div>
-            {/* ------------------------------------------------ */}
-            {/* ----------------------------------------------- */}
+          {/* ------------------------------------------------ */}
+          {/* ----------------------------------------------- */}
           <div className="p-4 border-b border-b-black ">
             <p className="font-bold text-lg px-6 py-4">
               Digital Content and Devices
@@ -93,8 +100,8 @@ const NavBottom = () => {
             <p className="text-md text-gray-500 px-6 py-2">Fire TV</p>
             <p className="text-md text-gray-500 px-6 py-2">Mover and Shakers</p>
           </div>
-            {/* ------------------------------------------------ */}
-            {/* ----------------------------------------------- */}
+          {/* ------------------------------------------------ */}
+          {/* ----------------------------------------------- */}
           <div className="p-4 border-b border-b-black ">
             <p className="font-bold text-lg px-6 py-4">
               Digital Content and Devices
@@ -103,8 +110,8 @@ const NavBottom = () => {
             <p className="text-md text-gray-500 px-6 py-2">Fire TV</p>
             <p className="text-md text-gray-500 px-6 py-2">Mover and Shakers</p>
           </div>
-            {/* ------------------------------------------------ */}
-            {/* ----------------------------------------------- */}
+          {/* ------------------------------------------------ */}
+          {/* ----------------------------------------------- */}
           <div className="p-4 border-b border-b-black ">
             <p className="font-bold text-lg px-6 py-4">
               Digital Content and Devices
@@ -113,8 +120,8 @@ const NavBottom = () => {
             <p className="text-md text-gray-500 px-6 py-2">Fire TV</p>
             <p className="text-md text-gray-500 px-6 py-2">Mover and Shakers</p>
           </div>
-            {/* ------------------------------------------------ */}
-            {/* ----------------------------------------------- */}
+          {/* ------------------------------------------------ */}
+          {/* ----------------------------------------------- */}
           <div className="p-4 border-b border-b-black ">
             <p className="font-bold text-lg px-6 py-4">
               Digital Content and Devices
@@ -123,8 +130,8 @@ const NavBottom = () => {
             <p className="text-md text-gray-500 px-6 py-2">Fire TV</p>
             <p className="text-md text-gray-500 px-6 py-2">Mover and Shakers</p>
           </div>
-            {/* ------------------------------------------------ */}
-            {/* ----------------------------------------------- */}
+          {/* ------------------------------------------------ */}
+          {/* ----------------------------------------------- */}
           <div className="p-4 border-b border-b-black ">
             <p className="font-bold text-lg px-6 py-4">
               Digital Content and Devices
@@ -133,7 +140,7 @@ const NavBottom = () => {
             <p className="text-md text-gray-500 px-6 py-2">Fire TV</p>
             <p className="text-md text-gray-500 px-6 py-2">Mover and Shakers</p>
           </div>
-            {/* ------------------------------------------------ */}
+          {/* ------------------------------------------------ */}
         </div>
       )}
 
