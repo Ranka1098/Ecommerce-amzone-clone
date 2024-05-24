@@ -1,7 +1,11 @@
 import React from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { Outlet, ScrollRestoration, createBrowserRouter } from "react-router-dom";
+import {
+  Outlet,
+  ScrollRestoration,
+  createBrowserRouter,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
@@ -9,6 +13,8 @@ import SingleProduct from "./pages/SingleProduct";
 import ProductDetail from "./pages/ProductDetail";
 import NewAccount from "./pages/NewAccount";
 import Order from "./pages/Order";
+import Checkout from "./pages/Checkout";
+import Confirm from "./pages/Confirm";
 
 const AppLayout = () => {
   return (
@@ -39,18 +45,24 @@ const appRouter = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path:"/order",
-        element:<Order />
-
-      }
+        path: "/order",
+        element: <Order />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "/confirm",
+        element: <Confirm />,
+      },
     ],
   },
   {
     path: "/product/",
     element: <SingleProduct />,
   },
-  
-  
+
   {
     path: "/login",
     element: <Login />,

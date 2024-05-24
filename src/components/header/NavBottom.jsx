@@ -27,7 +27,7 @@ const NavBottom = () => {
   }, []);
   // --------------------overlay drawer----------------------
   return (
-    <div className="w-full px-4 bg-[#232F3E]  text-white flex items-center gap-1 font-semibold cursor-pointer ">
+    <div className="w-full   px-4 bg-[#37475A]  text-white flex items-center gap-1 font-semibold cursor-pointer ">
       {/* ----------overlay----------------*/}
       {sidebar ? (
         <div

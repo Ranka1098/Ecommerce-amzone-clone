@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import StarRating from "../components/StarRating";
 
 const SingleProduct = ({ data }) => {
   const { image, title, price, description, category } = data;

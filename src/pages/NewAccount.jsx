@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { fLogin, gLogin, loginlogo } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
 import { FaCaretRight, FaEye, FaEyeSlash } from "react-icons/fa6";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { app } from "../firebase/FirebaseConfig";
+import { app, provider } from "../firebase/FirebaseConfig";
 import firebase from "firebase/compat/app";
 import { RotatingLines, ThreeDots } from "react-loader-spinner";
 import { useDispatch } from "react-redux";
@@ -151,12 +152,37 @@ const NewAccount = () => {
     }
   };
   // --submit form----------------
+  const handleGooglelogin = () => {
 
+    signInWithPopup(auth, provider)
+    .then((result) => {
+     
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      
+      const user = result.user;
+      console.log(user);
+      dispatch(setUserInfo(user))
+      setTimeout(()=>{
+        navigate("/")
+      },1000)
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      setLoading(false)
+      // ...
+    });
+  };
   return (
     <div className="max-w-5xl mx-auto pb-5 ">
       {/* -------image---------------- */}
       <div className="w-[400px]  mx-auto flex items-center justify-center">
-        <Link to="/">
+        <Link to="/login">
           <img src={loginlogo} alt="" className="text-black" />
         </Link>
         <p className="font-semibold -ml-2 text-xl">.in</p>
@@ -284,7 +310,12 @@ const NewAccount = () => {
 
             <div className="w-full flex items-center px-1">
               <Link className="w-[50%] cursor-pointer">
-                <img src={gLogin} alt="" className="w-full" />
+                <img
+                  src={gLogin}
+                  alt=""
+                  className="w-full"
+                  onClick={handleGooglelogin}
+                />
               </Link>
               <Link className="w-[50%] cursor-pointer object-contain">
                 <img src={fLogin} alt="" className="w-full object-contain" />

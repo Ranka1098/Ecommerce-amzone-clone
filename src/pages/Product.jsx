@@ -16,11 +16,11 @@ const Products = () => {
   }, []);
 
   return (
-    <div className="w-full h-full py-4 flex flex-wrap justify-center gap-14 relative z-10 bg-[#EBEDEC] ">
+    <div className="w-full h-full py-4 flex flex-wrap justify-center gap-4 relative z-10 bg-[#EBEDEC] ">
       {product.length === 0 && <Shimmer />}
       {product?.map((item) => (
-        <div key={item.id}> 
-          <Link to={"/product/" + item.id}> 
+        <div key={item.id}>
+          <Link to={"/product/" + item.id}>
             <SingleProduct data={item} />
           </Link>
         </div>

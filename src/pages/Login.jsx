@@ -95,7 +95,7 @@ const Login = () => {
           setSuccessMsg("logged in successfull Welcome Back");
           setTimeout(() => {
             navigate("/");
-          }, 2000);
+          }, 1000);
           // ...
         })
         .catch((error) => {
@@ -106,6 +106,7 @@ const Login = () => {
 
           if (errorCode.includes("auth/invalid-credential")) {
             setFirebaseEmailErr("check email ya password");
+            setLoading(false)
           }
         });
 

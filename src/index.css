@@ -31,4 +31,7 @@
     .loginLinks{
     @apply hover:text-amber-800 hover:underline duration-300
     }
+    .checkOutInfo{
+    @apply border-2 px-3 py-1 rounded-md
+    }
 }

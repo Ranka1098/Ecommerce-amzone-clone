@@ -5,11 +5,13 @@ import { removeCart } from "../store/cartSlice";
 import { incrementQuantity } from "../store/cartSlice";
 import { decrementQuantity } from "../store/cartSlice";
 import { emptyCart } from "../assets/index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 const Cart = () => {
   const product = useSelector((store) => store?.cart?.cartProduct);
-  console.log(product);
   const [totalprice, seTotalPrice] = useState("");
+  const [ask, setAsk] = useState(false);
+  const userInfo = useSelector((store) => store?.user?.userInfo);
 
   useEffect(() => {
     let total = 0;
@@ -22,16 +24,26 @@ const Cart = () => {
   }, [product]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClearCart = () => {
     dispatch(clearCart());
     seTotalPrice(0);
   };
 
+  const handleAsk = () => {
+    if (!userInfo?.uemail) {
+      alert("Please log in to proceed to checkout.");
+      navigate("/login");
+      return null;
+    }
+    setAsk(!ask);
+  };
+
   return (
     <div>
       {product.length > 0 ? (
-        <div className="w-full h-[84vh]  bg-gray-200 p-4 flex  gap-4">
+        <div className="w-full   bg-gray-200 p-4 flex  gap-4">
           {/* product detail page */}
           <div className="w-[75%] bg-white p-4 ">
             <div className="flex justify-between  border-b-2 py-2  border-b-black">
@@ -110,18 +122,45 @@ const Cart = () => {
             <p className="text-xl py-2 font-bold text-center">
               Total: <span>${totalprice}</span>
             </p>
-           <Link to="/order">
-           <button className="w-full p-2 bg-yellow-500 border-2 border-black rounded-md font-semibold ">
-              Proceed to Pay
+
+            <button
+              onClick={handleAsk}
+              className="w-full realtive p-2 bg-yellow-500 border-2 border-black rounded-md font-semibold "
+            >
+              Checkout
             </button>
-           </Link>
+            {/* -------------------------------------------------------------------------------- */}
+            {ask && (
+              <div className="absolute top-[45%] left-[25%] w-[600px] rounded-md bg-sky-600 p-4 shadow-2xl  ">
+                <p className="py-2 text-lg text-center">
+                  Your total amount is $ {totalprice} Are you sure want to
+                  continue ?{" "}
+                </p>
+                <div className="flex items-center justify-between ">
+                  <Link to="/checkout">
+                    <button className="px-4 py-2 bg-gray-500 rounded-md ml-15">
+                      Yes
+                    </button>
+                  </Link>
+                  <button
+                    className="px-4 py-2 bg-gray-500 rounded-md"
+                    onClick={() => setAsk(!ask)}
+                  >
+                    Cancle
+                  </button>
+                </div>
+              </div>
+            )}
+            {/* -------------------------------------------------------------------------------- */}
           </div>
         </div>
       ) : (
         <div className="w-[100%] h-[84vh] bg-gray-200 flex items-center justify-center">
           <img src={emptyCart} alt="" />
           <div className="w-[20rem]  p-3  bg-white flex flex-col items-center justify-center gap-2">
-            <p className="font-black text-xl text-center">Your Cart feels lonely.</p>
+            <p className="font-black text-xl text-center">
+              Your Cart feels lonely.
+            </p>
             <p className=" py-1 px-2 text-sm">
               Your Shooping cart lives to serve.Give it Pupose fill it with
               books,electronics,videos,etc. and make it happy

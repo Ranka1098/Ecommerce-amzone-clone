@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { setFilterProduct } from "../../store/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UserInfo from "../UserInfomation";
+import { FiMenu } from "react-icons/fi";
 import UserInformation from "../UserInfomation";
 const Navbar = () => {
   // ----navbar overlay----
@@ -62,9 +63,12 @@ const Navbar = () => {
   // --------------------overlay drawer----------------------
 
   return (
-    <div className="  w-full  bg-[#131921] text-white px-8 py-2  flex items-center gap-1 ">
+    <div className="w-full bg-[#232F3E] flex justify-between items-center gap-4 px-4 py-1 text-white">
+      <div className="block md:hidden">
+        <FiMenu size={45} />
+      </div>
       {/* -------------------logo------------------------- */}
-      <div className="headerHover">
+      <div className="headerHover block">
         <Link to="/">
           <img src={logo} alt="logo" className="w-24 " />
         </Link>
@@ -75,7 +79,7 @@ const Navbar = () => {
       {/* overlay */}
       {nav ? (
         <div
-          className="bg-black/45 fixed w-full  h-screen z-30 top-0 left-0 text-black "
+          className=" bg-black/45 fixed w-full  h-screen z-30 top-0 left-0 text-black "
           ref={ref}
         >
           <div className="absolute w-[400px] h-[250px] bg-white top-[12rem] left-[35rem] rounded-2xl rounded-tr-2xl duration-300 ">
@@ -120,8 +124,11 @@ const Navbar = () => {
       {/* overlay */}
 
       {/* ----------Location------------------------------ */}
-      <div className="headerHover p-1 " onClick={() => setNav(true)}>
-        <div>
+      <div
+        className="  headerHover p-1 flex items-center  "
+        onClick={() => setNav(true)}
+      >
+        <div className="">
           <CiLocationOn size={20} className=" text-white " />
         </div>
         <div className="flex flex-col gap-0">
@@ -132,7 +139,7 @@ const Navbar = () => {
       {/* ----------Location------------------------------ */}
 
       {/* -------------------query-bar----------------------- */}
-      <div className="h-10 flex flex-grow rounded-md relative">
+      <div className="h-10 flex flex-grow rounded-md relative ">
         <input
           type="text"
           value={query}
@@ -187,18 +194,24 @@ const Navbar = () => {
 
       {/* -----------SignIn page--------------------------------- */}
 
-      <div className="realative flex flex-col headerHover" >
-        {userDetail ?<div className="absolute top-[65px] right-18">
-          <UserInformation /> 
-        </div>: ""}
-        {userInfo ? (
-          <span className=" text-sm text-white -mb-2"  onClick={handleUserInfo}> {userInfo.uname}</span>
-        ) : (
-          <div>
-          <Link to="/login">
-          <span className=" text-sm -mb-2"> Hello, Sign In</span>
-          </Link>
+      <div className="realative flex flex-col headerHover ">
+        {userDetail ? (
+          <div className="absolute top-[65px] right-18 ">
+            <UserInformation />
           </div>
+        ) : (
+          ""
+        )}
+        {!userInfo?.uname ? (
+          <div>
+            <Link to="/login">
+              <span className=" text-sm -mb-2"> Hello, Sign In</span>
+            </Link>
+          </div>
+        ) : (
+          <span className=" text-sm text-white -mb-2" onClick={handleUserInfo}>
+            {userInfo?.uname}
+          </span>
         )}
 
         <span className="font-bold flex text-sm">
